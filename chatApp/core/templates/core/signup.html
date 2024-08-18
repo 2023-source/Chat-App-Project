@@ -1,0 +1,45 @@
+{% extends 'core/base.html' %}
+{% block title %} SignUp| {% endblock %}
+
+{% block content %}
+  <div class="p-10 lg:p-20 text-center">
+      <h1 class="text-3xl lg:text-6xl text-white">SignUp</h1>
+  </div>
+
+  <!-- The form is submited to the same url '/signup/ ' due to which views.signup function will run again.  -->
+  <!-- When the screen size is large the form's width is set to 25% of available width and form is aligned in the middle of page. -->
+  <form method="post" action="." class="lg:w-1/4 md:w-1/4 px-4 mx-auto">
+    {% csrf_token %}
+
+    <!-- The csrf_token stands for Cross Site Request Forgery Token  that prevents forgery attacks. -->
+    <div class="mb-5">
+        <label class="text-white">Username</label>
+        <input type="text" name="username" class="w-full mt-2 px-4 py-2 rounded-xl">
+    </div>
+
+    <div class="mb-5">
+        <label class="text-white">Password</label>
+        <input type="password" name="password1" class="w-full mt-2 px-4 py-2 rounded-xl">
+    </div>
+
+    <div class="mb-5">
+        <label class="text-white">Confirm Password</label>
+        <input type="password" name="password2" class="w-full mt-2 px-4 py-2 rounded-xl">
+    </div>
+
+    <!-- Before and after the form submission if there is error than this section is displayed -->
+    {% if form.errors %}
+      {% for field in form %}
+         {% for error in field.errors %}
+            <div class="mb-5 p-4 rounded-xl bg-red-300 text-white">
+                <p>{{ error|escape }}</p>
+            </div> 
+         {% endfor %}
+      {% endfor %}
+    {% endif %}
+
+    <button class="px-5 py-3 rounded-xl text-white bg-teal-800 hover:bg-teal-700">Submit</button>
+    <!-- After the submission of the form if there is no error then the frontpage will be displayed
+    with logout and room button as the user is directly loged in views.signup function. -->
+  </form>
+{% endblock %}
